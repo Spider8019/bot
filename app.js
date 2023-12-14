@@ -8,10 +8,10 @@ const app = express()
 const port = process.env.PORT || 4000
 
 const client = new Client({
-  authStrategy: new LocalAuth(),
-  // puppeteer: {
-  //   headless: false,
-  // },
+  // authStrategy: new LocalAuth(),
+  puppeteer: {
+    headless: false,
+  },
 })
 
 client.on('qr', (qr) => {

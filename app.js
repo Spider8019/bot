@@ -32,19 +32,19 @@ client.on('message', async (msg) => {
     case msg.body.toLowerCase() === 'hi_pp':
       client.sendMessage(msg.from, msgs.welcome_navigator)
       axios
-      .post(`${DB_BACK}createcustomer/`, {
-        phonenumber: msg.from,
-      })
-      .then(async (res) => {
-        console.log(res.data)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+        .post(`${DB_BACK}createcustomer/`, {
+          phonenumber: msg.from,
+        })
+        .then(async (res) => {
+          console.log(res.data)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
       break
-      case msg.body.toLowerCase().startsWith('1_pp_'):
-        if (msg.body) {
-          axios
+    case msg.body.toLowerCase().startsWith('1_pp_'):
+      if (msg.body) {
+        axios
           .get(`${DB_BACK}novel/${encodeURIComponent(msg.body.slice(5))}`)
           .then(async (res) => {
             if (res.data.error) {
@@ -64,12 +64,12 @@ client.on('message', async (msg) => {
             client.sendMessage(
               msg.from,
               'No Book matching your query was found in the database.' + error,
-              )
-            })
-          }
-          break
-          case msg.body.toLowerCase() === '2_pp':
-            if (msg.body) {
+            )
+          })
+      }
+      break
+    case msg.body.toLowerCase() === '2_pp':
+      if (msg.body) {
         axios
           .get(`${DB_BACK}userdetail/${encodeURIComponent(msg.from)}`)
           .then(async (res) => {
@@ -81,20 +81,19 @@ client.on('message', async (msg) => {
                 msg.from,
                 `Name : ${res.data[0].name}\nPhoneNumber : ${res.data[0].phonenumber}\nWalletBalance : ${res.data[0].wallet_balance}
                 `,
-                )
-              }
-            })
-            .catch((error) => {
-              client.sendMessage(
-                msg.from,
-                'No Book matching your query was found in the database.' + error,
-                )
-              })
+              )
+            }
+          })
+          .catch((error) => {
+            client.sendMessage(
+              msg.from,
+              'No Book matching your query was found in the database.' + error,
+            )
+          })
       }
       break
-    }
+  }
 })
-
 
 app.listen(port, () => {
   console.log('server is listening on 4000')

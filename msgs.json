@@ -1,0 +1,5 @@
+{
+    "company_title":"Paper Pantry",
+    "welcome_navigator":"📚 Welcome to Paper Pantry Chatbot! \n\nHello avid reader! We're thrilled to welcome you to Paper Pantry virtual gateway to a world of literary wonders! \n\nHI_pp - To start the conversation\n1_pp_{book_name} - Browse through our extensive collection\n2_pp - Checkout your profile",
+    "browse_book_navigator": "Specify desired book title."
+}

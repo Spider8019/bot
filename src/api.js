@@ -1,17 +1,17 @@
+const express = require('express')
+const serverless = require('serverless-http')
+// Create an instance of the Express app
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js')
 const qrcode = require('qrcode-terminal')
 const axios = require('axios')
 const msgs = require('./msgs.json')
 const DB_BACK = 'https://books-temp-dev.vercel.app/'
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 4000
 
 const client = new Client({
   // authStrategy: new LocalAuth(),
-  puppeteer: {
-    headless: false,
-  },
+  // puppeteer: {
+  //   headless: false,
+  // },
 })
 
 client.on('qr', (qr) => {
@@ -95,11 +95,26 @@ client.on('message', async (msg) => {
   }
 })
 
-app.listen(port, () => {
-  console.log('server is listening on 4000')
-})
+const app = express()
+// Create a router to handle routes
+const router = express.Router()
 
-app.get('/xyz', (req, res) => {
+// Define a route that responds with a JSON object when a GET request is made to the root path
+
+router.get('/xyz', (req, res) => {
   client.initialize()
   res.send('hello html')
 })
+
+router.get('/', (req, res) => {
+  res.json({
+    hello: 'hi!',
+  })
+})
+
+// Use the router to handle requests to the `/.netlify/functions/api` path
+app.use(`/.netlify/functions/api`, router)
+
+// Export the app and the serverless function
+module.exports = app
+module.exports.handler = serverless(app)
